@@ -1,0 +1,24 @@
+#setting {
+    margin-top: 20px;
+}
+
+.container-setting {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading {
+    font-size: 30px;
+    color: #59C7F1;
+    font-weight: bold;
+}
+
+.tab-container {
+    width: 95%;
+    /* height: 400px; */
+    background-color: white;
+    margin-top: 20px;
+}

@@ -1,0 +1,7 @@
+:root {   
+  --primary-color: #0a45b5;
+  --secondary-color: #1e1e1e;
+  --linear-color-1: rgb(10, 69, 181);
+  --linear-color-2: rgb(10, 69, 181, 1);
+  --linear-color-3: rgb(10, 69, 181, 0.8);
+}

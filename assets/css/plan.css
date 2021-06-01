@@ -1,0 +1,17 @@
+.heading-title p {
+    margin-bottom: 10px;
+}
+
+.heading-title .title {
+    margin-bottom: 0px;
+}
+
+.plan-free {
+    margin-bottom: 10px;
+}
+
+.free-btn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}

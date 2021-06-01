@@ -1,0 +1,9 @@
+:root {   
+  --primary-color: #377dff;
+  --secondary-color: #1e1e1e;
+  --linear-color-1: rgb(50, 119, 248,0.8);
+  --linear-color-2: rgb(50, 119, 248, 1);
+  --linear-color-3: rgba(50, 119, 248, 0.8);
+
+  --primary-box-shadow: 0px 10px 20px 0px rgba(50, 119, 248, 0.4);
+}

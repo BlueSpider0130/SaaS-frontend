@@ -1,0 +1,14 @@
+:root {   
+  --primary-color: #a37cfc;
+  --secondary-color: #1e1e1e;
+  --text-color: #8e989f;
+  --white-color: #ffffff;
+  --link-color: #121212;
+  --linear-color-1: rgb(109, 115, 239);
+  --linear-color-2: rgb(163, 120, 252);
+  --linear-color-3: rgb(109, 115, 239, 0.8);
+  --primary-box-shadow: 0px 10px 20px 0px rgba(139, 118, 246, 0.4);
+
+  --title-font-family: 'Now', sans-serif;
+  --body-font-family: 'Poppins', sans-serif;
+}

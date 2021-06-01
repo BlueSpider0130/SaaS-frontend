@@ -1,0 +1,23 @@
+#dashboard_header {
+    background-color: white;
+    border-radius: 5px;
+    /* margin-left: 5px;
+    margin-right: 5px; */
+}
+
+.upgrad-btn {
+    width: 150px;
+    border-radius: 5px;
+    height: 100%;
+}
+
+.header-btn-profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#dropdown_profile {
+    height: 100%;
+}

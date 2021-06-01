@@ -1,0 +1,72 @@
+.sign {
+    background: rgba(var(--primary-rgb-theme-color), 0.5);
+    margin-top: 10px;
+    box-shadow: 8px 24px 80px -32px #003658;
+    width: 30%;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+input[type=text],
+input[type=email],
+input[type=password] {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    padding-left: 15px;
+    height: 48px;
+    line-height: 48px;
+    clear: both;
+    color: #b6b6b6;
+    border: 1px solid #e1e1e1;
+}
+
+input :focus {
+    border: 1px solid #4ac4f3;
+    box-shadow: none;
+    outline: none;
+}
+
+.sign-logo {
+    width: 250px;
+}
+
+.sign-form {
+    margin-top: 20px;
+}
+
+.sign-input {
+    border-radius: 5px;
+    width: 100%;
+}
+
+.sign-btn {
+    width: 100%;
+    padding: none;
+    font-size: 25px;
+}
+
+@media(min-width:1601px) {
+    .sign {
+        width: 30%;
+    }
+}
+
+@media(max-width:1399px) {
+    .sign {
+        width: 50%;
+    }
+}
+
+@media(max-width:767px) {
+    .sign {
+        width: 80%;
+    }
+}
+
+@media(max-width:479px) {
+    .sign {
+        width: 95%;
+    }
+}

@@ -1,0 +1,37 @@
+/*
+
+Template: Sofbox - Angular 8 Software landing page
+Author: iqonic.design
+Version: 1.0
+Design and Developed by: iqonic.design
+
+NOTE: This is main stylesheet of template, This file contains the styling for the actual Template. Please do not change anything here! write in a custom.css file if required!
+
+*/
+
+.far,
+.fab,
+.fas {
+    font-weight: 900 !important;
+}
+/* 
+input[type=text],
+input[type=email],
+input[type=password] {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    padding-left: 15px;
+    height: 48px;
+    line-height: 48px;
+    clear: both;
+    color: #b6b6b6;
+    border: 1px solid #e1e1e1;
+}
+
+input :focus {
+    border: 1px solid #4ac4f3;
+    box-shadow: none;
+    outline: none;
+} */
