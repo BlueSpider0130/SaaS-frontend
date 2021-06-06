@@ -42,10 +42,18 @@ export default {
     }
   },
   mounted(){
-      this.$vs.setColor('primary', '#59C7F1');
+      this.$vs.setColor('primary', '#59C7F1')
 
-      const user_name = localStorage.getItem("user_name")           //get user info data from localstorage
-      this.$store.commit('setUserName', { text: user_name })        //set vuex data from localstorage using commit in mutation
+      var user_data = {
+        user_name:"",
+        user_id:"",
+        user_email:""
+      }
+      user_data.user_name = localStorage.getItem("user_name")           //get user info data from localstorage
+      user_data.user_id = localStorage.getItem("user_id")
+      user_data.user_email = localStorage.getItem("user_email")
+
+      this.$store.commit('setUserData', { text: user_data })        //set vuex data from localstorage using commit in mutation
       const u_name = this.$store.getters.getUserName                //get -------------------//------------------------------
       this.user_data.u_name = u_name;
       

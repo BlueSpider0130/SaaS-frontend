@@ -5,5 +5,6 @@ export const CONSTANTS = {
     'singleUpURL': '/api/singleUp',
     'singleDownURL': '/api/download',
     'registerReaderURL': '/api/registerReader',
-    'loginReaderURL': '/api/loginReader'
+    'loginReaderURL': '/api/loginReader',
+    'getReaderDataURL': '/api/getReaderData'
 }

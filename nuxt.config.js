@@ -48,7 +48,7 @@ export default {
     ],
 
     router: {
-        base: '/sofbox-vue/',
+        // base: '/sofbox-vue/',
         // middleware: ['auth']
     },
 

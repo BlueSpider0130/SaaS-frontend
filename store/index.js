@@ -1,6 +1,9 @@
 export var state = () => ({
     counter: "",
-    user_name: "123456"
+    user_name: "",
+    user_id:"",
+    user_email:""
+
 })
 
 export const mutations = {
@@ -9,8 +12,10 @@ export const mutations = {
         state.counter = text
     },
 
-    setUserName(state, { text }) {
-        state.user_name = text
+    setUserData(state, { text }) {
+        state.user_name = text.user_name
+        state.user_id = text.user_id
+        state.user_email = text.user_email
     }
 
 }
@@ -23,6 +28,14 @@ export const getters = {
 
     getUserName(state) {
         return state.user_name
+    },
+
+    getUserId(state) {
+        return state.user_id
+    },
+
+    getUserEmail() {
+        return state.user_email
     }
 
 }

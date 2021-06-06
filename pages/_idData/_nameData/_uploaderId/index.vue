@@ -16,6 +16,11 @@
                 <i class="fas fa-at"></i>
               </template>
             </vs-input>
+            <vs-input v-model="register_data.reader_name" placeholder="Name">
+              <template #icon>
+                <i class="fas fa-user"></i>
+              </template>
+            </vs-input>
             <vs-input
               type="password"
               v-model="register_data.reader_pwd"
@@ -110,6 +115,7 @@ export default {
       },
       register_data: {
         reader_email: "",
+        reader_name: "",
         reader_pwd: "",
         confirm_pwd: "",
       },
@@ -185,6 +191,7 @@ export default {
       if (
         this.mailformat.test(this.register_data.reader_email) &&
         this.register_data.reader_pwd != "" &&
+        this.register_data.reader_name != "" &&
         this.register_data.reader_pwd == this.register_data.confirm_pwd &&
         this.register_data.reader_pwd.length > 5
       ) {
@@ -195,6 +202,7 @@ export default {
         console.log(this.file_data);
         const data = {
           reader_email: this.register_data.reader_email,
+          reader_name: this.register_data.reader_name,
           reader_pwd: this.register_data.reader_pwd,
           pdf_id: this.file_data.file_id,
           pdf_name: this.file_data.file_name,
