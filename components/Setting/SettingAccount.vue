@@ -94,6 +94,9 @@
             <label>Password:</label>
             <span>{{user_data.u_new_pass}}</span>
           </div>
+          <div class="d-flex justify-content-center">
+            <vs-button @click="change(user_data)">OK</vs-button>
+          </div>
           <!-- <div class="d-flex justify-content-between">
             <label>Plan:</label>
             <span>{{user_data.u_current_plan}}</span>
@@ -105,7 +108,7 @@
 
 <script>
 import logoImg from '../../assets/images/logo-1.png'
-import { getReaders, setActiveAccount } from "../../utils/API";
+import { changeInfo } from "../../utils/API";
 // import "../../assets/css/setting.css";
 
 
@@ -119,10 +122,10 @@ export default {
       mailformat: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       user_data:{
           u_id:"",
-          u_name:"Larry Holsky",
-          u_email:"topwebdev.0612@gmail.com",
-          u_current_pass:"current",
-          u_new_pass:"new",
+          u_name:"",
+          u_email:"",
+          u_current_pass:"",
+          u_new_pass:"",
       },
       product_percent:30,
       sub_percent:12,
@@ -139,10 +142,49 @@ export default {
     // console.log(this.user_data)
   },
   methods:{
+    openNotification(position = null, color) {
+      const noti = this.$vs.notification({
+        color,
+        position,
+        // title: 'Documentation Vuesax 4.0+',
+        text: 'Please check your email address or password. Password must have numbers over 6. 👉 ProtectPass 1.x'
+      })
+    },
+    openChangeSuccess(position = null, color) {
+      const noti = this.$vs.notification({
+        color,
+        position,
+        // title: 'Documentation Vuesax 4.0+',
+        text: 'Changed successfully! 👉 ProtectPass 1.x'
+      })
+    },
+    openChangeWrong(position = null, color) {
+      const noti = this.$vs.notification({
+        color,
+        position,
+        // title: 'Documentation Vuesax 4.0+',
+        text: 'Current password is wrong! 👉 ProtectPass 1.x'
+      })
+    },
     update(user_data){
-      this.update_confirm=true;
-      if (this.mailformat.test(this.user_data.u_email)) {
-        console.log(user_data)
+      if (this.mailformat.test(this.user_data.u_email) && this.user_data.u_current_pass != "" && this.user_data.u_new_pass != "" && this.user_data.u_new_pass.length>5 ) {
+        // changeInfo(user_data)
+        this.update_confirm=true;
+      }else {
+        this.openNotification('top-left', 'danger')
+      }
+    },
+    async change(user_data){
+        // console.log(user_data)
+      const change = await changeInfo(user_data)
+      if (change == "success") {
+        localStorage.removeItem('user_email')
+        this.$store.commit('changeUserInfo', { text: user_data })
+        this.openChangeSuccess('top-right', 'success')
+        // this.$router.push('/landing-page-1')
+        this.$router.push('/signin-page')
+      }else if (change == "wrong_pwd") {
+        this.openChangeWrong('top-right', 'danger')
       }
     }
   }

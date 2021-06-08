@@ -61,7 +61,7 @@ export default {
           u_name:"",
           u_email:"",
           u_pass:"",
-      },
+        },
       users: [
         {
             "id": "Administrator",
@@ -70,7 +70,7 @@ export default {
             "email": "topwebdev.0612@gmail.com",
             "website": "hildegard.org",
         }
-    ]
+      ]
     }
   },
   methods:{

@@ -121,16 +121,18 @@ export default {
       },
       login_data: {
         reader_email: "",
+        uploader_id:""
       },
       register_active: false,
       welcome_active: true,
     };
   },
   mounted() {
-    console.log(this.$route.params);
-    this.file_data.file_id = this.$route.params.idData;
-    this.file_data.file_name = this.$route.params.nameData + ".pdf";
-    this.file_data.uploader_id = this.$route.params.uploaderId;
+    console.log(this.$route.params)
+    this.file_data.file_id = this.$route.params.idData
+    this.file_data.file_name = this.$route.params.nameData + ".pdf"
+    this.file_data.uploader_id = this.$route.params.uploaderId
+    this.login_data.uploader_id = this.$route.params.uploaderId
   },
   methods: {
     openNotification(position = null, color) {
@@ -165,6 +167,14 @@ export default {
         text: "This is download buton. Please click this button to download product. 👉 ProtectPass 1.x",
       });
     },
+    openDisable(position = null, color) {
+      const noti = this.$vs.notification({
+        color,
+        position,
+        // title: 'Documentation Vuesax 4.0+',
+        text: "This account has been disabled by author. Please request to author!. 👉 ProtectPass 1.x",
+      });
+    },
     async downloadItem($event) {
       $event.preventDefault();
       const reader_email = localStorage.getItem('reader_email')
@@ -188,13 +198,7 @@ export default {
       this.welcome_active = true;
     },
     async registerReader() {
-      if (
-        this.mailformat.test(this.register_data.reader_email) &&
-        this.register_data.reader_pwd != "" &&
-        this.register_data.reader_name != "" &&
-        this.register_data.reader_pwd == this.register_data.confirm_pwd &&
-        this.register_data.reader_pwd.length > 5
-      ) {
+      if (this.mailformat.test(this.register_data.reader_email) && this.register_data.reader_pwd != "" && this.register_data.reader_name != "" && this.register_data.reader_pwd == this.register_data.confirm_pwd && this.register_data.reader_pwd.length > 5) {
         console.log(
           this.register_data.reader_email,
           this.register_data.reader_pwd
@@ -209,29 +213,33 @@ export default {
           uploader_id: this.file_data.uploader_id,
         };
         const register_status = await registerReader(data)
-        const reader_email = this.register_data.reader_email
-        console.log("this is status ", register_status)
+        // const reader_email = this.register_data.reader_email
         if (register_status == "success") {
-          this.openSuccess("top-right", "success");
-          localStorage.setItem("reader_email", reader_email)
-          this.register_active = false;
-          this.download_active = true;
+          this.openSuccess("top-right", "success")
+          localStorage.setItem("reader_email", this.register_data.reader_email)
+          this.register_active = false
+          this.download_active = true
+        }else if(register_status == "disable"){
+          this.openDisable("top-right", "primary")
         } else if (register_status == "already") {
-          this.openAlready("top-right", "primary");
+          this.openAlready("top-right", "primary")
         }
-      } else {
-        this.openNotification("top-left", "danger");
+      }else {
+        this.openNotification("top-left", "danger")
       }
     },
     async loginReader(){
       if (this.mailformat.test(this.login_data.reader_email)) {
         const login_status = await loginReader(this.login_data)
+        console.log(this.login_data)
         const reader_email = this.login_data.reader_email
         if (login_status == "success") {
           localStorage.setItem("reader_email", reader_email)
           this.welcome_active = false
           this.download_active = true
           this.openSuccess
+        }else if (login_status == "disable") {
+          this.openDisable("top-right", "primary")
         }else this.openNomember('top-left', 'danger')
       } else {
         this.openNotification('top-left', 'danger')

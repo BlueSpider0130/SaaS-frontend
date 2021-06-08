@@ -139,7 +139,7 @@
       </template>
       <div class="con-form p-3">
         <div class="d-flex flex-column justify-content-center m-2">
-          <div class="w-full d-flex justify-content-center" style="background-color:#C4FFD4">
+          <div ref="text" class="w-full d-flex justify-content-center" style="background-color:#C4FFD4">
             http://192.168.110.94:5700/{{single_download_link.pdfId}}/{{single_download_link.pdfRandomName}}/{{single_download_link.uploaderUserId}}
           </div>
         </div>
@@ -273,6 +273,15 @@ export default {
       }else alert("upload fault!")
     },
     copy(){
+      const textToCopy = "http://192.168.110.94:5700/" + this.single_download_link.pdfId + "/" + this.single_download_link.pdfRandomName + "/" + this.single_download_link.uploaderUserId
+      const tmpTextField = document.createElement("textarea")
+      tmpTextField.textContent = textToCopy
+      tmpTextField.setAttribute("style","position:absolute; right:200%;")
+      document.body.appendChild(tmpTextField)
+      tmpTextField.select()
+      tmpTextField.setSelectionRange(0, 99999) /*For mobile devices*/
+      document.execCommand("copy")
+      tmpTextField.remove()
     },
     
   },

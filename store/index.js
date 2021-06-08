@@ -26,6 +26,9 @@ export const mutations = {
     
     setPdfData(state, { text }){
         state.get_pdf_data = text
+    },
+    changeUserInfo(state, { text }){
+        state.user_email = text.u_email
     }
 
 }

@@ -13,6 +13,7 @@ import Setting from '../../components/Setting/Setting'
 
 
 export default {
+  middleware:"auth",
   layout:"Sidebar",
 
   components:{

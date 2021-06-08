@@ -7,7 +7,7 @@
           <b-tabs content-class="mt-3" align="center" background="primary">
             <b-tab title="Account"><SettingAccount/></b-tab>
             <b-tab title="Billing"><SettingBilling/></b-tab>
-            <b-tab title="Users"><SettingUsers/></b-tab>
+            <!-- <b-tab title="Users"><SettingUsers/></b-tab> -->
           </b-tabs>
         </div>
 
