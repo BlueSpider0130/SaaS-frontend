@@ -10,10 +10,10 @@
           Add Product
         </vs-button>
         <hr style="width:100%; background-color:#59C7F1;">
-        <div class="b-d-container">
+        <!-- <div class="b-d-container">
           <div class="clickable" @click="bulkAdd()"><i class="fas fa-desktop"></i>&nbsp;Bulk Importer</div>
           <div class="clickable"><i class="fas fa-download"></i>&nbsp;Download</div>
-        </div>
+        </div> -->
       </div>
       <div class="products-title-list">
         Your Products
@@ -40,25 +40,33 @@
       <div class="product-list">
         <div class="center">
           <vs-table>
+            <template #thead>
+              <vs-th style="width:10%"> type </vs-th>
+              <vs-th> name </vs-th>
+              <vs-th> author </vs-th>
+              <vs-th> download link </vs-th>
+              <vs-th> id </vs-th>
+            </template>
             <template #tbody>
               <vs-tr
                 :key="i"
                 v-for="(tr, i) in $vs.getPage(products, page, max)"
                 :data="tr"
               >
-                <vs-td class="sum-td">
+                <vs-td>
                   <i class="fas fa-file-pdf" style="font-size:40px; color:#59C7F1"></i>
-                  <div class="td-right">
-                    <div style="color:#59C7F1; font-weight:bold;">{{tr.owner}}</div>
-                    <div>{{tr.created_date}}</div>
-                  </div>
-
                 </vs-td>
                 <vs-td>
-                Created {{ tr.file_name }}
+                  {{tr.pdf_original_name}}
                 </vs-td>
                 <vs-td>
-                {{ tr.id }}
+                  {{ tr.upload_user_name }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.download_link }}
+                </vs-td>
+                <vs-td>
+                  {{ i + 1 }}
                 </vs-td>
               </vs-tr>
             </template>
@@ -151,7 +159,7 @@
 <script>
 import logoImg from '../../assets/images/logo-1.png'
 import Vinput from '../Vinput/Vinput'
-import { singleUploader } from '../../utils/API';
+import { singleUploader, getPdf } from '../../utils/API';
 
 import "../../assets/css/products.css";
 
@@ -174,78 +182,7 @@ export default {
       //table
       page: 1,
       max: 3,
-      products: [
-        {
-          "id": 1,
-          "owner": "Leanne Graham",
-          "created_date": "Bret",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "hildegard.org",
-        },
-        {
-          "id": 2,
-          "owner": "Ervin Howell",
-          "created_date": "Antonette",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "anastasia.net",
-        },
-        {
-          "id": 3,
-          "owner": "Clementine Bauch",
-          "created_date": "Samantha",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "ramiro.info",
-        },
-        {
-          "id": 4,
-          "owner": "Patricia Lebsack",
-          "created_date": "Karianne",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "kale.biz",
-        },
-        {
-          "id": 5,
-          "owner": "Chelsey Dietrich",
-          "created_date": "Kamren",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "demarco.info",
-        },
-        {
-          "id": 6,
-          "owner": "Mrs. Dennis Schulist",
-          "created_date": "Leopoldo_Corkery",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "ola.org",
-        },
-        {
-          "id": 7,
-          "owner": "Kurtis Weissnat",
-          "created_date": "Elwyn.Skiles",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "elvis.io",
-        },
-        {
-          "id": 8,
-          "owner": "Nicholas Runolfsdottir V",
-          "created_date": "Maxime_Nienow",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "jacynthe.com",
-        },
-        {
-          "id": 9,
-          "owner": "Glenna Reichert",
-          "created_date": "Delphine",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "conrad.com",
-        },
-        {
-          "id": 10,
-          "owner": "Clementina DuBuque",
-          "created_date": "Moriah.Stanton",
-          "file_name": "delivery_E_Book.pdf",
-          "website": "ambrose.net",
-        }
-      ],
+      products: [],
       //add single button active
       single_add:false,
       bulk_add:false,
@@ -296,7 +233,7 @@ export default {
     },
     createFile(single_file) {
       if (!single_file.type.match('pdf.*')) {
-        alert('please select txt file');
+        alert('please select pdf file');
         this.dragging = false;
         return;
       }
@@ -338,6 +275,32 @@ export default {
     copy(){
     },
     
+  },
+  async mounted(){
+    var user_data = {
+      user_name: "",
+      user_email: "",
+      user_id: "",
+    }
+    user_data.user_name = this.$store.getters.getUserName
+    user_data.user_email = this.$store.getters.getUserEmail
+    user_data.user_id = this.$store.getters.getUserId
+    // console.log(user_data)
+
+    var get_pdf_data = this.$store.getters.getPdfData
+    if (get_pdf_data.length == 0) {
+      console.log("length is 0")
+      let tbl_data = await getPdf(user_data)
+      this.$store.commit('setPdfData', { text: tbl_data })
+      let pdf_data = this.$store.getters.getPdfData
+      this.products = pdf_data
+      console.log(pdf_data)
+    }else{
+      let pdf_data = this.$store.getters.getPdfData
+      this.products = pdf_data
+      console.log(pdf_data)
+    }
+
   },
 
   computed: {

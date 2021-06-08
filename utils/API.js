@@ -101,6 +101,40 @@ export const loginReader = async(data) => {
 export const getReaders = async(data) => {
     const DATA = await Axios.post(CONSTANTS.getReaderDataURL, data).then((res) => {
         if(res.status == 200){
+            // console.log(res.data)
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    })
+    return DATA
+}
+
+export const setActiveAccount = async(data) => {
+    const DATA = await Axios.post(CONSTANTS.setActiveAccountURL, data).then((res) => {
+        if (res.status == 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    })
+    return DATA
+}
+
+export const getPdf = async(data) => {
+    const DATA = await Axios.post(CONSTANTS.getPdfDataURL, data).then((res) => {
+        if (res.status == 200) {
+            return res.data
+        }
+    }).catch((err) => {
+        console.log(err)
+    })
+    return DATA
+}
+
+export const changeInfo = async(data) => {
+    const DATA = await Axios.post(CONSTANTS.changeUserInfoURL, data).then((res) => {
+        if(res.status == 200){
             return res.data
         }
     }).catch((err) => {

@@ -2,19 +2,19 @@
   <section id="setting_account">
       <div class="account-container">
         <div class="id-form">
-          Account (Merchant ID:209624)
+          Account 
         </div>
         <div class="select-form">
 
-          <div>
+          <!-- <div>
             <label>Name</label>
             <vs-input v-model="user_data.u_name"/>
-          </div>
+          </div> -->
           <div>
             <label>Email</label>
             <vs-input v-model="user_data.u_email"/>
           </div>
-          <div>
+          <!-- <div>
             <label>Current Plan</label>
             <vs-select
               v-model="user_data.u_current_plan"
@@ -29,21 +29,21 @@
                 Subscription Plan
               </vs-option>
             </vs-select>
-          </div>
+          </div> -->
 
         </div>
         <div class="pwd-update">
           <div class="pwd-one">
-            <label>New Password:</label>
-            <vs-input></vs-input>
+            <label>Current Password:</label>
+            <vs-input v-model="user_data.u_current_pass"></vs-input>
           </div>
           <div class="pwd-one">
-            <label>Confirm Password:</label>
-            <vs-input></vs-input>
+            <label>New Password:</label>
+            <vs-input v-model="user_data.u_new_pass"></vs-input>
           </div>
         </div>
         <div class="member-btn-con">
-          <vs-button square color="dribbble" @click="update(user_data.u_name,user_data.u_email,user_data.u_current_plan)">
+          <vs-button square color="dribbble" @click="update(user_data)">
               Update
           </vs-button>
           
@@ -91,9 +91,13 @@
             <span>{{user_data.u_email}}</span>
           </div>
           <div class="d-flex justify-content-between">
+            <label>Password:</label>
+            <span>{{user_data.u_new_pass}}</span>
+          </div>
+          <!-- <div class="d-flex justify-content-between">
             <label>Plan:</label>
             <span>{{user_data.u_current_plan}}</span>
-          </div>
+          </div> -->
         </div>
       </vs-dialog>
   </section>
@@ -101,8 +105,7 @@
 
 <script>
 import logoImg from '../../assets/images/logo-1.png'
-
-
+import { getReaders, setActiveAccount } from "../../utils/API";
 // import "../../assets/css/setting.css";
 
 
@@ -113,11 +116,13 @@ export default {
   data () {
     return {
       logo: logoImg,
+      mailformat: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       user_data:{
+          u_id:"",
           u_name:"Larry Holsky",
           u_email:"topwebdev.0612@gmail.com",
-          u_pass:"",
-          u_current_plan:"Standard"
+          u_current_pass:"current",
+          u_new_pass:"new",
       },
       product_percent:30,
       sub_percent:12,
@@ -126,9 +131,19 @@ export default {
       update_confirm:false,
     }
   },
+  mounted() {
+    this.user_data.u_id = this.$store.getters.getUserId
+    this.user_data.u_name = this.$store.getters.getUserName
+    this.user_data.u_email = this.$store.getters.getUserEmail
+
+    // console.log(this.user_data)
+  },
   methods:{
-    update(change_name, change_email, change_plan){
+    update(user_data){
       this.update_confirm=true;
+      if (this.mailformat.test(this.user_data.u_email)) {
+        console.log(user_data)
+      }
     }
   }
 }

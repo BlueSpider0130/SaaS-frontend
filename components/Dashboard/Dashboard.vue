@@ -96,7 +96,7 @@
                   {{ tr.reader_email }}
                 </vs-td>
                 <vs-td>
-                  <vs-button border icon @click="profile(tr.reader_name, tr.reader_email, i + 1, tr.reader_available, tr.date)">
+                  <vs-button border icon @click="profile(tr.reader_name, tr.reader_email, i + 1, tr.reader_available, tr.date, tr.reader_id)">
                     <i class="fas fa-eye"></i>
                     Client Profile
                   </vs-button>
@@ -109,7 +109,7 @@
                 </vs-td>
                 <vs-td>
                   <div class="w-75">
-                    <vs-switch v-model="tr.reader_available">
+                    <vs-switch v-model="tr.reader_available" @input="account(tr.reader_available, tr.reader_id)">
                       <template #off> Disable </template>
                       <template #on> Enable </template>
                     </vs-switch>
@@ -155,7 +155,7 @@
           </div> -->
           <div class="d-flex justify-content-between">
             <label>Disable/Enable Account:</label>
-            <vs-switch v-model="client_profile_data.c_status">
+            <vs-switch v-model="client_profile_data.c_status" @input="account(client_profile_data.c_status, client_profile_data.c_id)">
               <template #off> Disable </template>
               <template #on> Enable </template>
             </vs-switch>
@@ -206,7 +206,7 @@
 import logoImg from "../../assets/images/logo-1.png";
 import protectPDF from "../../assets/images/ProtectPass/protectedPDF.png";
 import "../../assets/css/dashboard.css";
-import { getReaders } from "../../utils/API";
+import { getReaders, setActiveAccount } from "../../utils/API";
 
 export default {
   name: "Dashboard",
@@ -239,6 +239,7 @@ export default {
         c_signedup_date: "",
         c_products_accessed: "2015",
         c_status: "",
+        c_id:""
       },
       //client profile reset pwd
       client_reset_active: false,
@@ -256,12 +257,13 @@ export default {
   },
   methods: {
     //when click "eye" button(see client profile) setting data:name and email of specific tr
-    profile(name, email, id, status,date) {
+    profile(name, email, id, status, date, reader_id) {
       this.client_profile_data.id = id
       this.client_profile_data.c_fullname = name
       this.client_profile_data.c_email = email
       this.client_profile_data.c_status = status
       this.client_profile_data.c_signedup_date = date
+      this.client_profile_data.c_id = reader_id
       this.client_profile_active = !this.client_profile_active
     },
     //when click "reset" button(reset password) setting data:name and email of specific tr
@@ -270,22 +272,51 @@ export default {
       this.client_reset_pwd.c_email = email
       this.client_reset_active = !this.client_reset_active
     },
+    account(status, reader_id){
+      console.log(status)
+      console.log(reader_id)
+      let data = {
+        status: status,
+        reader_id: reader_id
+      }
+
+      setActiveAccount(data)
+    },
   },
   async mounted() {
     var user_data = {
       user_name: "",
       user_email: "",
       user_id: "",
-    };
+    }
     user_data.user_name = this.$store.getters.getUserName
     user_data.user_email = this.$store.getters.getUserEmail
     user_data.user_id = this.$store.getters.getUserId
-    const tbl_data = await getReaders(user_data)
-    this.users = tbl_data
-    this.users.map((u) => {
-      u.reader_available = u.reader_available ? true : false
-    });
-    console.log(tbl_data)
+
+    var get_reader_data = this.$store.getters.getReaderData
+    if (get_reader_data.length == 0) {
+      console.log("length is 0")
+      let tbl_data = await getReaders(user_data)
+      this.$store.commit('setReaderData', { text: tbl_data })
+      let reader_data = this.$store.getters.getReaderData
+      this.users = reader_data
+      console.log(reader_data)
+      this.users.map((u) => {
+        u.reader_available = u.reader_available ? true : false
+      });
+    }else{
+      let reader_data = this.$store.getters.getReaderData
+      this.users = reader_data
+      console.log(reader_data)
+      this.users.map((u) => {
+        u.reader_available = u.reader_available ? true : false
+      });
+    }
+
+    
+  },
+  computed:{
+    
   },
   watch: {
     client_profile_data: {
@@ -294,11 +325,11 @@ export default {
 
       // We have to move our method to a handler field
       handler(v) {
-        console.log(v, "The list of colours has changed!");
         var temp = this.users;
         temp.map((user, index) => {
           if (user.reader_email == v.c_email) {
             user.reader_available = v.c_status;
+            console.log(v, "The list of colours has changed!");
           }
         });
         this.users = temp;

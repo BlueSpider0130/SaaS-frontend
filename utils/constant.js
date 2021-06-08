@@ -6,5 +6,8 @@ export const CONSTANTS = {
     'singleDownURL': '/api/download',
     'registerReaderURL': '/api/registerReader',
     'loginReaderURL': '/api/loginReader',
-    'getReaderDataURL': '/api/getReaderData'
+    'getReaderDataURL': '/api/getReaderData',
+    'setActiveAccountURL': '/api/setActiveAccount',
+    'getPdfDataURL': '/api/getPdfData',
+    'changeUserInfoURL': '/api/changeInfo'
 }
