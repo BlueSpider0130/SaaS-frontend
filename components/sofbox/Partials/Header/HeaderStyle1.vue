@@ -29,11 +29,11 @@
                   </a>
                 </li>
               </ul>
+              <nuxt-link to="/signin-page" class="nav-link button bt-black iq-mt-5">
+                Signin
+              </nuxt-link>
               <slot name="navContent" />
             </div>
-            <nuxt-link to="/signin-page">
-            <button class="button" style="background-color:#fff; color:#000">Log in</button>
-            </nuxt-link>
           </nav>
         </div>
       </div>
